@@ -28,8 +28,9 @@ class Download {
   }
 
   async download() {
-    let getProListLoad;
-    let getTagListLoad;
+    let getProListLoad; // 获取项目列表loading
+    let getTagListLoad; // 获取项目版本loading
+    let downloadLoad; // 获取下载代码到制定目录地址loading
     let repos;
     let version;
 
@@ -51,7 +52,6 @@ class Download {
 
     const choices = repos.map(({ name }) => name);
 
-    console.log(repos, choices);
     const questions = [
       {
         type: 'list',
@@ -77,6 +77,32 @@ class Download {
     }
 
     console.log(`您选择的项目是${repo}, 即将下载版本${version}`);
+
+    const repoName = [
+      {
+        type: 'input',
+        name: 'repoPath',
+        message: '请输入项目名称：',
+        validate(v) {
+          const done = this.async();
+          if (!v.trim()) {
+            done('项目名称不能为空');
+          }
+          done(null, true);
+        },
+      },
+    ];
+
+    const { repoPath } = await this.inquirer.prompt(repoName);
+
+    try {
+      downloadLoad = this.downLoad.start();
+      await this.git.downloadProject({ repo, version, repoPath });
+      downloadLoad.succeed('下载代码成功');
+    } catch (error) {
+      console.log(error);
+      downloadLoad.fail('下载代码失败...');
+    }
   }
 }
 

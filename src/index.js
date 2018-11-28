@@ -18,10 +18,6 @@ commander.version(version)
 // 获取命令行中传入的第一个参数
 const [todo = ''] = commander.args;
 
-console.log('todo', todo);
-
-console.log('__dirname', __dirname);
-
 if (existsSync(resolve(__dirname, `command/${todo}.js`))) {
   // 引入并执行command文件夹下的js文件
   require(`./command/${todo}.js`);

@@ -1,3 +1,4 @@
+import download from 'download-git-repo';
 import request from './request';
 import { orgName } from '../../config';
 
@@ -21,9 +22,21 @@ class Git {
     console.log('getProjectUrl', this);
   }
 
-  // 下载项目
-  downloadProject() {
-    console.log('downloadProject', this);
+  /**
+   * 下载项目
+   * @param {Object}
+   * @param repo 项目名称
+   * @param version 项目版本
+   * @param repoPath 本地开发目录
+   *
+   */
+  downloadProject({ repo, version, repoPath }) {
+    return new Promise((resolve, reject) => {
+      download(`${this.orgName}/${repo}#${version}`, repoPath, (err) => {
+        if (err) reject(err);
+        resolve(true);
+      });
+    });
   }
 }
 
