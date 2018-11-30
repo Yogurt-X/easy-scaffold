@@ -8,9 +8,11 @@ const instance = axios.create({
 });
 
 // Add a request interceptor
+// 可以在config这里做一些配置
 instance.interceptors.request.use(config => config,
   error => Promise.reject(error));
 
+// response interceptor
 instance.interceptors.response.use(response => response.data,
   error => Promise.reject(error));
 

@@ -9,7 +9,9 @@
 ``` bash
 # install dependencies
 npm install
-# start
+# 链接到全局node_modules
+npm link
+# start (这一步在任何位置执行均可，建议选择你想要存放下载git项目的目录)
 learn download
 
 ```

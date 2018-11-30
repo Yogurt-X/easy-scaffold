@@ -12,10 +12,13 @@ import { existsSync } from 'fs';
 import { resolve } from 'path';
 import { version } from '../package.json';
 
+// version: 定义命令程序的版本号
+// parse: 用于解析process.argv，设置options以及触发commands
 commander.version(version)
   .parse(process.argv);
 
 // 获取命令行中传入的第一个参数
+console.log(process.argv);
 const [todo = ''] = commander.args;
 
 if (existsSync(resolve(__dirname, `command/${todo}.js`))) {
@@ -27,5 +30,6 @@ if (existsSync(resolve(__dirname, `command/${todo}.js`))) {
       你输入了未知指令
     `.red,
   );
+  // 终止当前进程并返回给定的 code
   process.exit(-1);
 }
